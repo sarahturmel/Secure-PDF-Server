@@ -7,6 +7,33 @@
 </head>
 <body>
     {{> header title="Welcome to the Secure PDF Server"}}
+    <h2>Want to know some cool snake facts?</h2>
+    <p>Well, you've come to the right place! Here on the totally secure pdf server we have some quality snake-centric works for you to puruse! Sit back, relax, and take some time to learn all about snakes!</p>
+    <h2>Browse our available PDFs</h2>
+    <ul id="dynamic-list"></ul>
+    <script>
+	 const pdfList = {{{ pdf_dict }}};
+	 const list = document.getElementById("dynamic-list");
+	 pdfList.forEach(item => {
+	    const listItem = document.createElement("li");
+	    
+	    // button that will take user to pdf
+            const button = document.createElement("button");
+            button.textContent =
+                `${item.json.title} – Length: ${item.json.length} pages. Description: ${item.json.description}`;
+            button.style.margin = "6px 0";
+            button.style.padding = "8px 14px";
+            button.style.cursor = "pointer";
+            
+	    // When clicked, navigate to /pdfs/<file>
+            button.addEventListener("click", () => {
+                window.location.href = `/pdfs/${item.pdf}`;
+            });
+
+            listItem.appendChild(button);
+	    list.appendChild(listItem);
+	 });
+    </script>
     {{> footer }}
 </body>
 </html>

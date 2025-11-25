@@ -1,9 +1,15 @@
+// File that does all the action for the app
+
 const express = require('express');
-const session = require('express-session');
 const app = express();
 const path = require('path');
-const hbs = require('hbs');
+const http = require('http');
 const PORT = process.env.PORT || 3000;
+const hbs = require('hbs');
+
+// Import your modules
+const validatePdf = require('./validation');
+const router = require('./routing');
 
 // Set view engine and views directory
 app.set('view engine', 'hbs');
@@ -12,25 +18,21 @@ app.set('views', path.join(__dirname, 'views'));
 // Register partials directory
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static('public'));
+// Path to the PDF directory
+const pdfDir = path.resolve(__dirname, 'pdfs');
 
-// Session middleware configuration
-app.use(session({
-    secret: 'my-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false, // Set to true if using HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+// PDF validation middleware — runs for PDF requests
+app.use('/pdfs/:filename', (req, res, next) => {
+    const pdfName = req.params.filename;
+
+    if (!validatePdf(pdfName)) {
+        return res.status(404).send("PDF not found.");
     }
-}));
-
-// Serve the homepage
-app.get('/', (req, res) => {
-    res.render('home');
+    next(); // continue to router
 });
+
+// Use the routing module
+app.use(router);
 
 // Listen in on the port number specified earlier
 app.listen(PORT, () => {
