@@ -21,6 +21,9 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 // Path to the PDF directory
 const pdfDir = path.resolve(__dirname, 'pdfs');
 
+// Serve files from public
+app.use(express.static(path.join(__dirname, 'public')));
+
 // PDF validation middleware — runs for PDF requests
 app.use('/pdfs/:filename', (req, res, next) => {
     const pdfName = req.params.filename;
