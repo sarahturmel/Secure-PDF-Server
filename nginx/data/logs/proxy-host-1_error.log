@@ -1,1 +1,0 @@
-2025/11/25 23:34:38 [warn] 195#195: *1 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 72.224.90.138, server: keengreenmachine.org, request: "GET /pdfs/SNAKES.pdf HTTP/1.1", upstream: "http://172.19.0.2:3000/pdfs/SNAKES.pdf", host: "keengreenmachine.org", referrer: "https://keengreenmachine.org/"
