@@ -21,9 +21,6 @@
             const button = document.createElement("button");
             button.textContent =
                 `${item.json.title} – Length: ${item.json.length} pages. Description: ${item.json.description}`;
-            button.style.margin = "6px 0";
-            button.style.padding = "8px 14px";
-            button.style.cursor = "pointer";
             
 	    // When clicked, navigate to /pdfs/<file>
             button.addEventListener("click", () => {
